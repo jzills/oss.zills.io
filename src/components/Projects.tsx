@@ -1,3 +1,4 @@
+import type { Ref } from 'react'
 import { Install } from '@/components/Install'
 import type { Project } from '@/data/projects'
 
@@ -26,12 +27,16 @@ function Meta({ project }: { project: Project }) {
   )
 }
 
-// A flagship tool: a card with room for its description and registry switch.
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
+// A flagship tool: a card with room for its description and registry switch. It lifts
+// and lights up on hover; on phones, where cards stack, the one in the middle of the
+// screen (`active`) takes that look instead, since touch has no hover (as on j.zills.io).
+export function ProjectCard({ project, active = false, ref }: { project: Project; active?: boolean; ref?: Ref<HTMLElement> }) {
   return (
     <article
-      className="panel-in flex flex-col gap-4 rounded-md border border-border bg-surface p-5 transition-colors hover:border-accent/40 sm:p-6"
-      style={{ '--i': index } as React.CSSProperties}
+      ref={ref}
+      className={`rise flex flex-col gap-4 rounded-md border bg-surface p-5 transition-[translate,scale,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-accent/40 hover:ring-1 hover:ring-accent/15 sm:p-6 ${
+        active ? 'scale-[1.03] border-accent/40 ring-1 ring-accent/15 motion-reduce:scale-100' : 'border-border'
+      }`}
     >
       <div>
         <h3 className="text-xl font-bold tracking-[-0.02em] text-fg">{project.name}</h3>
@@ -49,7 +54,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 // Everything else: a compact row, name and description at left, install at right.
 export function ProjectRow({ project }: { project: Project }) {
   return (
-    <li className="grid grid-cols-[minmax(0,1fr)] gap-3 border-t border-border py-5 md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:gap-10">
+    <li className="rise grid grid-cols-[minmax(0,1fr)] gap-3 border-t border-border py-5 md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:gap-10">
       <div className="min-w-0">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h3 className="text-base font-semibold text-fg">{project.name}</h3>
