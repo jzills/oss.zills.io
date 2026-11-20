@@ -1,6 +1,7 @@
 import { Footer } from '@/components/Footer'
 import { ProjectCard, ProjectRow } from '@/components/Projects'
 import { GROUPS, projects, projectsIn } from '@/data/projects'
+import { useCenterFocus } from '@/lib/useCenterFocus'
 
 function GroupHeading({ id, label, count }: { id: string; label: string; count: number }) {
   return (
@@ -13,6 +14,8 @@ function GroupHeading({ id, label, count }: { id: string; label: string; count: 
 
 export default function App() {
   const flagship = projectsIn('flagship')
+  // Below md the flagship cards stack in one column; the centred one lights up.
+  const { focused, itemRef } = useCenterFocus('(max-width: 767px)')
   return (
     <div className="texture relative min-h-dvh">
       <main className="relative mx-auto max-w-[1100px] px-5 sm:px-7">
@@ -40,7 +43,7 @@ export default function App() {
           <GroupHeading id="flagship" label={GROUPS[0].label} count={flagship.length} />
           <div className="grid gap-4 md:grid-cols-2">
             {flagship.map((p, i) => (
-              <ProjectCard key={p.name} project={p} index={i} />
+              <ProjectCard key={p.name} project={p} active={focused === i} ref={itemRef(i)} />
             ))}
           </div>
         </section>

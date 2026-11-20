@@ -56,4 +56,13 @@ describe('the OSS page', () => {
   it('never hides content in the prerendered HTML', () => {
     expect(html).not.toMatch(/opacity:\s*0/)
   })
+
+  it('pops a "Copied!" bubble from each copy button, announced politely rather than read twice', () => {
+    expect(html.match(/<span[^>]*aria-hidden="true"[^>]*>Copied!<\/span>/g)).toHaveLength(projects.length)
+    expect(html.match(/<span class="sr-only" aria-live="polite"><\/span>/g)).toHaveLength(projects.length)
+  })
+
+  it('lets every card and row rise in as it scrolls into view', () => {
+    expect(html.match(/class="[^"]*\brise\b/g)).toHaveLength(projects.length)
+  })
 })
