@@ -69,4 +69,24 @@ describe('the OSS page', () => {
   it('links the footer Z/LLS mark to zills.io', () => {
     expect(html).toMatch(/<a[^>]*href="https:\/\/zills\.io\/"[^>]*>Z<span[^>]*>\/<\/span>LLS<\/a>/)
   })
+
+  it("makes each flagship card a link to its docs, or to GitHub when it has none, like j.zills.io's cards", () => {
+    const cards = html.match(/<article[\s\S]*?<\/article>/g)!
+    expect(cards).toHaveLength(projectsIn('flagship').length)
+    projectsIn('flagship').forEach((p, i) => {
+      const stretched = cards[i].match(/<a[^>]*class="[^"]*after:inset-0[^"]*"[^>]*>/g)!
+      expect(stretched).toHaveLength(1)
+      expect(stretched[0]).toContain(`href="${p.docsUrl ?? p.githubUrl}"`)
+    })
+  })
+
+  it('keeps the tabs, copy buttons and other links clickable above the card link', () => {
+    const cards = html.match(/<article[\s\S]*?<\/article>/g)!
+    for (const card of cards) {
+      for (const el of card.match(/<(button|a)\b[^>]*>/g)!) {
+        if (el.includes('after:inset-0')) continue
+        expect(el, el).toMatch(/\brelative\b[^"]*\bz-20\b|\bz-20\b[^"]*\brelative\b/)
+      }
+    }
+  })
 })
