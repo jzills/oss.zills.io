@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import favicon from '../public/favicon.svg?raw'
 import { renderToString } from 'react-dom/server'
 import App from './App'
 import { GROUPS, projects, projectsIn, registries } from '@/data/projects'
@@ -50,7 +51,7 @@ describe('the OSS page', () => {
 
   it('ends with the family footer', () => {
     expect(html).toContain('href="https://zills.io/"')
-    expect(text).toMatch(/Z\/LLSzills\.io ↗$/)
+    expect(text).toMatch(/z\/\/szills\.io ↗$/)
     expect(text).not.toContain('©')
   })
 
@@ -68,7 +69,8 @@ describe('the OSS page', () => {
   })
 
   it('links the footer Z/LLS mark to zills.io', () => {
-    expect(html).toMatch(/<a[^>]*href="https:\/\/zills\.io\/"[^>]*>Z<span[^>]*>\/<\/span>LLS<\/a>/)
+    expect(html).toMatch(/<a[^>]*href="https:\/\/zills\.io\/"[^>]*>z<span[^>]*><\/span><span[^>]*>\/\/<\/span>s<\/a>/)
+    expect(html).toMatch(/<span[^>]*class="[^"]*bg-accent[^"]*"[^>]*><\/span><span[^>]*>\/\/<\/span>/)
   })
 
   it("makes each flagship card a link to its docs, or to GitHub when it has none, like j.zills.io's cards", () => {
@@ -89,5 +91,14 @@ describe('the OSS page', () => {
         expect(el, el).toMatch(/\brelative\b[^"]*\bz-20\b|\bz-20\b[^"]*\brelative\b/)
       }
     }
+  })
+})
+
+describe('favicon', () => {
+  // The family favicon: a bold z drawn as a shape (favicons can't load web fonts) and the site's dot.
+  it('is the z. symbol with this site\'s dot', () => {
+    expect(favicon).toMatch(/<path[^>]*d="[^"]+"/)
+    expect(favicon).not.toContain('<text')
+    expect(favicon).toMatch(/<circle[^>]*fill="#22d3ee"/)
   })
 })
