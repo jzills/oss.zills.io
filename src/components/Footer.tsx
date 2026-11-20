@@ -1,0 +1,20 @@
+// Every zills site's footer: the Z/LLS mark beside a link elsewhere in the family
+// (here, back to the hub), with the copyright under them.
+export function Footer() {
+  return (
+    <footer className="relative border-t border-border/60 py-6 font-mono text-[11px] text-muted">
+      <div className="mx-auto flex max-w-[1100px] flex-col gap-1 px-5 sm:px-7">
+        <div className="flex items-center gap-2.5">
+          <span className="font-sans text-sm font-extrabold tracking-[-0.03em] text-fg">
+            Z<span className="font-semibold text-fg/55">/</span>LLS
+          </span>
+          <span aria-hidden="true" className="h-3.5 w-px bg-border" />
+          <a href="https://zills.io/" className="transition-colors hover:text-fg">
+            zills.io <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <span>© {__BUILD_YEAR__} Joshua Zillwood</span>
+      </div>
+    </footer>
+  )
+}

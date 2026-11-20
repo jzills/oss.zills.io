@@ -1,0 +1,66 @@
+import { Install } from '@/components/Install'
+import type { Project } from '@/data/projects'
+
+const linkClass = 'font-mono text-[11px] text-muted transition-colors hover:text-fg'
+
+function Links({ project }: { project: Project }) {
+  return (
+    <div className="flex gap-4">
+      {project.docsUrl && (
+        <a href={project.docsUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+          Docs <span aria-hidden="true">↗</span>
+        </a>
+      )}
+      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        GitHub <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  )
+}
+
+function Meta({ project }: { project: Project }) {
+  return (
+    <p className="font-mono text-[11px] tracking-[0.06em] text-muted uppercase">
+      {[project.language, ...project.tags].join(' · ')}
+    </p>
+  )
+}
+
+// A flagship tool: a card with room for its description and registry switch.
+export function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    <article
+      className="panel-in flex flex-col gap-4 rounded-md border border-border bg-surface p-5 transition-colors hover:border-accent/40 sm:p-6"
+      style={{ '--i': index } as React.CSSProperties}
+    >
+      <div>
+        <h3 className="text-xl font-bold tracking-[-0.02em] text-fg">{project.name}</h3>
+        <div className="mt-1.5">
+          <Meta project={project} />
+        </div>
+      </div>
+      <p className="flex-1 text-[15px] leading-relaxed text-zinc-300">{project.description}</p>
+      <Install name={project.name} installs={project.installs} />
+      <Links project={project} />
+    </article>
+  )
+}
+
+// Everything else: a compact row, name and description at left, install at right.
+export function ProjectRow({ project }: { project: Project }) {
+  return (
+    <li className="grid grid-cols-[minmax(0,1fr)] gap-3 border-t border-border py-5 md:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] md:gap-10">
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h3 className="text-base font-semibold text-fg">{project.name}</h3>
+          <Meta project={project} />
+        </div>
+        <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">{project.description}</p>
+        <div className="mt-2.5">
+          <Links project={project} />
+        </div>
+      </div>
+      <Install name={project.name} installs={project.installs} />
+    </li>
+  )
+}

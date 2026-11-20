@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-bg: #09090b;
+  --color-surface: #111113;
+  --color-border: #27272a;
+  --color-fg: #fafafa;
+  --color-muted: #8b8b94;
+  --color-accent: #22d3ee;
+}
+
+/* Hover styles switch on while a mouse is in use, as detected by
+   public/pointer-init.js. Tailwind's default (hover: hover) media query is
+   false on some touchscreen laptops even with a mouse; phones never get the
+   attribute, so taps don't stick. */
+@custom-variant hover (&:where([data-pointer=mouse] *):hover);
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Faint diagonal hairlines and a soft cyan glow at the top, as on zills.io. */
+.texture::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 70% 0%, rgb(34 211 238 / 0.1), transparent 70%),
+    repeating-linear-gradient(-60deg, rgb(255 255 255 / 0.025) 0 1px, transparent 1px 46px);
+}
+
+/* Entrance: once, on load, from the prerendered HTML. `backwards` means an element
+   whose animation never runs is simply visible. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  .panel-in {
+    animation: panel-in 300ms ease-out backwards;
+    animation-delay: calc(var(--i, 0) * 50ms);
+  }
+}
