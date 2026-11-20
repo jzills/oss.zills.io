@@ -50,7 +50,8 @@ describe('the OSS page', () => {
 
   it('ends with the family footer', () => {
     expect(html).toContain('href="https://zills.io/"')
-    expect(text).toMatch(/© \d{4} Joshua Zillwood/)
+    expect(text).toMatch(/Z\/LLSzills\.io ↗$/)
+    expect(text).not.toContain('©')
   })
 
   it('never hides content in the prerendered HTML', () => {

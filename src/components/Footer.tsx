@@ -1,5 +1,5 @@
 // Every zills site's footer: the Z/LLS mark beside a link elsewhere in the family
-// (here, back to the hub), with the copyright under them.
+// (here, back to the hub).
 export function Footer() {
   return (
     <footer className="relative border-t border-border/60 py-6 font-mono text-[11px] text-muted">
@@ -14,7 +14,6 @@ export function Footer() {
             zills.io <span aria-hidden="true">↗</span>
           </a>
         </div>
-        <span>© {__BUILD_YEAR__} Joshua Zillwood</span>
       </div>
     </footer>
   )
