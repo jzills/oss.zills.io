@@ -5,6 +5,9 @@ import { useCopyToClipboard } from '@/lib/useCopyToClipboard'
 import { registries } from '@/data/projects'
 import type { Install as InstallCommand } from '@/data/projects'
 
+// Raised above a card's stretched link (see Projects.tsx), so these stay clickable on their own.
+const raised = 'relative z-20'
+
 // The copy glyph pops into a check mark and a "Copied!" bubble rises above the
 // button, as on j.zills.io's Contact section (CSS here rather than framer-motion).
 // Where the clipboard is unavailable, the command is selected for copying by hand.
@@ -17,7 +20,7 @@ function CopyButton({ text, label, onFail }: { text: string; label: string; onFa
       onClick={copy}
       aria-label={`Copy install command for ${label}`}
       title="Copy install command"
-      className={`relative grid h-8 w-8 shrink-0 place-items-center rounded border transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-accent ${
+      className={`${raised} grid h-8 w-8 shrink-0 place-items-center rounded border transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-accent ${
         copied ? 'border-accent/60 bg-accent/5 text-accent' : 'border-border bg-surface text-muted hover:border-accent/40 hover:text-fg'
       }`}
     >
@@ -78,7 +81,7 @@ export function Install({ name, installs }: { name: string; installs: InstallCom
               aria-controls={`${id}-panel`}
               tabIndex={n === at ? 0 : -1}
               onClick={() => setAt(n)}
-              className={`rounded px-2 py-0.5 font-mono text-[11px] transition-colors focus-visible:outline-2 focus-visible:outline-accent ${
+              className={`${raised} rounded px-2 py-0.5 font-mono text-[11px] transition-colors focus-visible:outline-2 focus-visible:outline-accent ${
                 n === at ? 'bg-accent/15 text-accent' : 'text-muted hover:text-fg'
               }`}
             >
@@ -87,7 +90,7 @@ export function Install({ name, installs }: { name: string; installs: InstallCom
           ))}
         </div>
       ) : (
-        <a href={current.url} target="_blank" rel="noopener noreferrer" className="mb-2 inline-block font-mono text-[11px] text-muted transition-colors hover:text-fg">
+        <a href={current.url} target="_blank" rel="noopener noreferrer" className={`${raised} mb-2 inline-block font-mono text-[11px] text-muted transition-colors hover:text-fg`}>
           {registries[current.registry]} <span aria-hidden="true">↗</span>
         </a>
       )}
@@ -95,7 +98,7 @@ export function Install({ name, installs }: { name: string; installs: InstallCom
         id={`${id}-panel`}
         role={installs.length > 1 ? 'tabpanel' : undefined}
         aria-labelledby={installs.length > 1 ? `${id}-tab-${at}` : undefined}
-        className="flex items-center gap-3 rounded border border-border bg-bg/60 py-1.5 pr-1.5 pl-3"
+        className={`${raised} flex items-center gap-3 rounded border border-border bg-bg/60 py-1.5 pr-1.5 pl-3`}
       >
         <pre className="min-w-0 flex-1 overflow-x-auto py-0.5 font-mono text-[12px] leading-relaxed text-fg">
           <code ref={code}>{current.command}</code>

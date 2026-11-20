@@ -4,15 +4,29 @@ import type { Project } from '@/data/projects'
 
 const linkClass = 'font-mono text-[11px] text-muted transition-colors hover:text-fg'
 
-function Links({ project }: { project: Project }) {
+// Stretched-link pattern, as on j.zills.io's project cards: the card's destination
+// (its docs, or GitHub when it has none) spreads its ::after over the whole card, so
+// the card is one link without nesting anchors. It must stay unpositioned so inset-0
+// resolves against the card; everything else interactive is raised above it.
+const stretchClass = 'after:absolute after:inset-0 after:z-10'
+const raisedClass = 'relative z-20'
+
+function Links({ project, card = false, lit = false }: { project: Project; card?: boolean; lit?: boolean }) {
+  const destination = project.docsUrl ?? project.githubUrl
+  const cls = (href: string) => {
+    if (!card) return linkClass
+    if (href !== destination) return `${linkClass} ${raisedClass}`
+    // The destination lights up while the card is hovered, or centred on a phone.
+    return `font-mono text-[11px] transition-colors group-hover:text-fg ${lit ? 'text-fg' : 'text-muted'} ${stretchClass}`
+  }
   return (
     <div className="flex gap-4">
       {project.docsUrl && (
-        <a href={project.docsUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href={project.docsUrl} target="_blank" rel="noopener noreferrer" className={cls(project.docsUrl)}>
           Docs <span aria-hidden="true">↗</span>
         </a>
       )}
-      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className={cls(project.githubUrl)}>
         GitHub <span aria-hidden="true">↗</span>
       </a>
     </div>
@@ -34,7 +48,7 @@ export function ProjectCard({ project, active = false, ref }: { project: Project
   return (
     <article
       ref={ref}
-      className={`rise flex flex-col gap-4 rounded-md border bg-surface p-5 transition-[translate,scale,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-accent/40 hover:ring-1 hover:ring-accent/15 sm:p-6 ${
+      className={`rise group relative flex flex-col gap-4 rounded-md border bg-surface p-5 transition-[translate,scale,border-color,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-accent/40 hover:ring-1 hover:ring-accent/15 sm:p-6 ${
         active ? 'scale-[1.03] border-accent/40 ring-1 ring-accent/15 motion-reduce:scale-100' : 'border-border'
       }`}
     >
@@ -46,7 +60,7 @@ export function ProjectCard({ project, active = false, ref }: { project: Project
       </div>
       <p className="flex-1 text-[15px] leading-relaxed text-zinc-300">{project.description}</p>
       <Install name={project.name} installs={project.installs} />
-      <Links project={project} />
+      <Links project={project} card lit={active} />
     </article>
   )
 }

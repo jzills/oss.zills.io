@@ -22,6 +22,12 @@
   color-scheme: dark;
 }
 
+/* Tailwind v4 leaves buttons with the arrow cursor; tabs and copy buttons get the hand. */
+button:not(:disabled),
+[role="tab"] {
+  cursor: pointer;
+}
+
 body {
   margin: 0;
   background: var(--color-bg);
