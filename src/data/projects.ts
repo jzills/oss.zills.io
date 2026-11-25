@@ -46,7 +46,7 @@ const entries: Entry[] = [
   {
     name: 'hmac-manager',
     repo: 'hmac-manager',
-    docsUrl: 'https://jzills.github.io/hmac-manager/',
+    docsUrl: 'https://j.zills.io/hmac-manager/',
     group: 'flagship',
     language: 'C#',
     description: 'HMAC request authentication for ASP.NET Core: middleware, handlers and validation, extended to Kubernetes with an Istio external authorizer.',
@@ -57,7 +57,7 @@ const entries: Entry[] = [
       { registry: 'docker', command: 'docker pull zills/hmac-manager', url: 'https://hub.docker.com/r/zills/hmac-manager' },
       {
         registry: 'helm',
-        command: 'helm repo add zills https://jzills.github.io/hmac-manager\nhelm install hmac-manager zills/hmac-manager',
+        command: 'helm repo add zills https://j.zills.io/hmac-manager\nhelm install hmac-manager zills/hmac-manager',
         url: 'https://artifacthub.io/packages/helm/zills/hmac-manager',
       },
     ],
@@ -65,7 +65,7 @@ const entries: Entry[] = [
   {
     name: 'kx',
     repo: 'kx',
-    docsUrl: 'https://jzills.github.io/kx/',
+    docsUrl: 'https://j.zills.io/kx/',
     group: 'flagship',
     language: 'Go',
     description: 'A kubectl companion with index-based resource selection: pick pods and resources by number instead of copying names.',
@@ -79,7 +79,7 @@ const entries: Entry[] = [
   {
     name: 'action-cache',
     repo: 'action-cache',
-    docsUrl: 'https://jzills.github.io/action-cache/',
+    docsUrl: 'https://j.zills.io/action-cache/',
     group: 'flagship',
     language: 'C#',
     description: 'Namespaced response caching for ASP.NET Core, on Memory, Redis, SQL Server or Cosmos DB, with targeted invalidation.',
@@ -89,7 +89,7 @@ const entries: Entry[] = [
   {
     name: 'snoop',
     repo: 'snoop',
-    docsUrl: 'https://jzills.github.io/snoop/',
+    docsUrl: 'https://j.zills.io/snoop/',
     group: 'flagship',
     language: 'Go',
     description: 'Watch AI agent sessions live or inspect past ones: costs, file changes and time spent, read locally from existing transcripts.',

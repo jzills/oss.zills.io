@@ -12,7 +12,7 @@ describe('projects', () => {
   })
 
   it('gives every flagship tool its docs site', () => {
-    for (const p of projectsIn('flagship')) expect(p.docsUrl).toMatch(/^https:\/\/jzills\.github\.io\/[a-z-]+\/$/)
+    for (const p of projectsIn('flagship')) expect(p.docsUrl).toMatch(/^https:\/\/j\.zills\.io\/[a-z-]+\/$/)
   })
 
   it('puts every project in a known group, and every group has projects', () => {
